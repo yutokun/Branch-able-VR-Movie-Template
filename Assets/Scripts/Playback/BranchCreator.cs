@@ -44,8 +44,7 @@ public class BranchCreator : MonoBehaviour
 
 	public void Destroy()
 	{
-		transform.Scale(0f, 0.5f);
-		Invoke(nameof(RemoveChildren), 0.5f);
+		transform.Scale(0f, 0.5f, RemoveChildren);
 	}
 
 	void RemoveChildren()
