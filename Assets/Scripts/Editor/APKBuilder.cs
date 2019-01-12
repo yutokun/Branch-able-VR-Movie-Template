@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Linq;
+using UnityEditor;
 
 /// <summary>
 /// ストアに弾かれない APK を作成します
@@ -10,12 +11,14 @@ public class APKBuilder
 	{
 		//ファイル名を取得
 		var path = EditorUtility.SaveFolderPanel("ビルドの保存先を指定してください。", "", "");
-		var levels = new[] {"Assets/Scenes/Launch.unity", "Assets/Scenes/Main.unity"};
+		var levels = from scene in EditorBuildSettings.scenes
+		             where scene.enabled
+		             select scene.path;
 
 		//ビルドナンバーをインクリメント
 		++PlayerSettings.Android.bundleVersionCode;
 
 		//ビルド
-		BuildPipeline.BuildPlayer(levels, path + "/Branch-able Story.apk", BuildTarget.Android, BuildOptions.None);
+		BuildPipeline.BuildPlayer(levels.ToArray(), path + "/Branch-able Story.apk", BuildTarget.Android, BuildOptions.None);
 	}
 }
