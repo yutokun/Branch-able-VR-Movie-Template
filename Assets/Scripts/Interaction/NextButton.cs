@@ -2,7 +2,7 @@
 
 public class NextButton : MonoBehaviour, IPointable
 {
-	public Video video;
+	[HideInInspector] public Video video;
 
 	public void Pointed()
 	{
