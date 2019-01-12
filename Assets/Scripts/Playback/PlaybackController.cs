@@ -21,11 +21,7 @@ public class PlaybackController : MonoBehaviour
 	{
 		material.SetColor("_Tint", Color.black);
 
-		player.prepareCompleted += source =>
-		{
-			Debug.Log("Color Set");
-			material.SetColor("_Tint", new Color(0.5f, 0.5f, 0.5f, 0.5f));
-		};
+		player.prepareCompleted += source => material.SetColor("_Tint", new Color(0.5f, 0.5f, 0.5f, 0.5f));
 
 		end.SetActive(false);
 		player.loopPointReached += OnVideoEnd;
@@ -63,6 +59,7 @@ public class PlaybackController : MonoBehaviour
 
 		player.clip = clip;
 		player.Play();
+		Debug.Log("Playing " + clip.name);
 
 		foreach (var item in pointers) item.SetRunningState(false);
 		controllerVisible.ChangeAlpha(0f);
