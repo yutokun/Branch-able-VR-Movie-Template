@@ -6,7 +6,7 @@ public static class Tween
 {
 	public static Coroutine Scale(this Transform target, float scale, float duration)
 	{
-		return target.GetComponent<MonoBehaviour>().StartCoroutine(ScaleCoroutine(target, scale, duration));
+		return TweenBase.instance.StartCoroutine(ScaleCoroutine(target, scale, duration));
 	}
 
 	static IEnumerator ScaleCoroutine(Transform target, float scale, float duration)
@@ -24,7 +24,7 @@ public static class Tween
 
 	public static Coroutine FadeText(this TextMeshPro target, Color color, float duration)
 	{
-		return target.GetComponent<MonoBehaviour>().StartCoroutine(FadeTextCoroutine(target, color, duration));
+		return TweenBase.instance.StartCoroutine(FadeTextCoroutine(target, color, duration));
 	}
 
 	static IEnumerator FadeTextCoroutine(TextMeshPro target, Color color, float duration)
