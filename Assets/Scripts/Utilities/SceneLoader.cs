@@ -16,7 +16,7 @@ public class SceneLoader : MonoBehaviour
 		overlay.enabled = false;
 		fadable.enabled = true;
 		fadable.material.color = Color.clear;
-		yield return Tween.FadeMaterial(this, fadable.material, Color.white, 1f);
+		yield return Tween.FadeMaterial(fadable.material, Color.white, 1f);
 
 		// OVROverlay が描画されるのに2フレームかかるので待ち
 		overlay.enabled = true;
@@ -33,7 +33,7 @@ public class SceneLoader : MonoBehaviour
 
 		overlay.enabled = false;
 		fadable.enabled = true;
-		yield return Tween.FadeMaterial(this, fadable.material, Color.clear, 1f);
+		yield return Tween.FadeMaterial(fadable.material, Color.clear, 1f);
 
 		operation.allowSceneActivation = true;
 	}

@@ -8,6 +8,6 @@ public class ControllerVisiblity : MonoBehaviour
 	{
 		var color = materials[0].color;
 		color.a = alpha;
-		foreach (var item in materials) Tween.FadeMaterial(this, item, color, 1f);
+		foreach (var item in materials) Tween.FadeMaterial(item, color, 1f);
 	}
 }

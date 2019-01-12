@@ -39,9 +39,9 @@ public static class Tween
 		}
 	}
 
-	public static Coroutine FadeMaterial(MonoBehaviour self, Material target, Color color, float duration)
+	public static Coroutine FadeMaterial(Material target, Color color, float duration)
 	{
-		return self.StartCoroutine(FadeMaterialCoroutine(target, color, duration));
+		return TweenBase.instance.StartCoroutine(FadeMaterialCoroutine(target, color, duration));
 	}
 
 	static IEnumerator FadeMaterialCoroutine(Material target, Color color, float duration)
