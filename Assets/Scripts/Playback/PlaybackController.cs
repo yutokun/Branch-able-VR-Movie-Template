@@ -67,6 +67,16 @@ public class PlaybackController : MonoBehaviour
 		currentVideo = video;
 	}
 
+#if UNITY_EDITOR
+	void Update()
+	{
+		if (player.isPlaying && Input.GetKeyDown(KeyCode.Return))
+		{
+			player.time = player.clip.length;
+		}
+	}
+#endif
+
 	void ShowEndPanel()
 	{
 		end.SetActive(true);
