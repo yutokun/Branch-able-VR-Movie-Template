@@ -2,7 +2,7 @@
 
 public class StartButton : MonoBehaviour, IPointable
 {
-	[SerializeField] PlaybackController playback;
+	[SerializeField] PlaybackController player;
 
 	public void Pointed()
 	{
@@ -20,7 +20,7 @@ public class StartButton : MonoBehaviour, IPointable
 
 	void Play()
 	{
-		playback.PlayFirstVideo();
+		player.PlayFirstVideo();
 		Destroy(transform.parent.gameObject);
 	}
 

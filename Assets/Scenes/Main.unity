@@ -2315,7 +2315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cc71fed81c2f7d48b459a056cc23c7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playback: {fileID: 70945536}
+  player: {fileID: 70945536}
 --- !u!64 &1525187685
 MeshCollider:
   m_ObjectHideFlags: 0

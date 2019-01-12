@@ -19,7 +19,7 @@ public enum NextIs
 /// </summary>
 public class Video : MonoBehaviour
 {
-	PlaybackController playback;
+	PlaybackController player;
 	public VideoClip clip;
 	public NextIs nextIs;
 
@@ -28,12 +28,12 @@ public class Video : MonoBehaviour
 
 	void Awake()
 	{
-		playback = FindObjectOfType<PlaybackController>();
+		player = FindObjectOfType<PlaybackController>();
 	}
 
 	public void Play()
 	{
-		playback.Play(clip, nextIs, this);
+		player.Play(clip, nextIs, this);
 	}
 
 	void OnValidate()
