@@ -33,7 +33,7 @@ public class VideoInspector : Editor
 			EditorGUILayout.Separator();
 			branches.arraySize = EditorGUILayout.IntSlider("選択肢の数", branches.arraySize, 1, 5);
 
-			for (int i = 0; i < branches.arraySize; i++)
+			for (var i = 0; i < branches.arraySize; i++)
 			{
 				EditorGUI.indentLevel = 1;
 
