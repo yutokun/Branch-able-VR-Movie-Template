@@ -11,7 +11,6 @@ public class VideoRenderer : MonoBehaviour
 
 	void Update()
 	{
-		// ビデオのフレームを Skybox にコピー
 		sky.mainTexture = video.texture;
 	}
 }

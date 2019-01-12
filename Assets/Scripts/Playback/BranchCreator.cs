@@ -24,11 +24,6 @@ public class BranchCreator : MonoBehaviour
 		transform.localScale = Vector3.zero;
 	}
 
-	/// <summary>
-	/// 選択肢を作成して並べます。
-	/// </summary>
-	/// <param name="sentence">文章</param>
-	/// <param name="branches">選択肢</param>
 	public void Create(string sentence, Branch[] branches)
 	{
 		text.text = sentence;
@@ -44,27 +39,21 @@ public class BranchCreator : MonoBehaviour
 #endif
 		}
 
-		//拡大エフェクト
 		Tween.Scale(this, transform, 1f, 0.5f);
 	}
 
 	public void Destroy()
 	{
-		//選択肢をすべて小さく縮小して、削除します。
 		Tween.Scale(this, transform, 0f, 0.5f);
 		Invoke(nameof(RemoveChildren), 0.5f);
 	}
 
 	void RemoveChildren()
 	{
-		//上記の Destroy() から呼ばれ、全ての選択肢オブジェクトを削除します。
 		foreach (Transform item in transform) Destroy(item.gameObject);
 	}
 
 #if UNITY_EDITOR
-	/// <summary>
-	/// Unity 上でのみ、キーボードで操作できるようにしています
-	/// </summary>
 	void Update()
 	{
 		if (Input.anyKeyDown)

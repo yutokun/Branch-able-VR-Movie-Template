@@ -17,21 +17,21 @@ public class Pointer : MonoBehaviour
 
 	void Update()
 	{
-		if (isRunning == false) return; //非表示設定の場合、処理しません
+		if (isRunning == false) return;
 
-		if (Physics.Raycast(transform.position, transform.forward, out hit)) //指し示す先にものがある場合、そこにラインを伸ばします
+		if (Physics.Raycast(transform.position, transform.forward, out hit))
 		{
 			line.SetPosition(1, Vector3.Lerp(line.GetPosition(1), transform.InverseTransformPoint(hit.point), 0.5001f));
 			pointable = hit.transform.GetComponent<IPointable>();
-			if (Trigger) pointable?.Click(); //トリガーを押したらクリック処理を行います
+			if (Trigger) pointable?.Click();
 		}
-		else //指し示す先に何もなければ、ラインの長さを20cmに固定します
+		else
 		{
 			line.SetPosition(1, Vector3.Lerp(line.GetPosition(1), Vector3.forward * 0.2f, 0.5001f));
 			pointable = null;
 		}
 
-		if (pointable != prevPointable) //指し示す物が変わった場合に、ポイントした場合、外した場合の処理をそれぞれ呼びます
+		if (pointable != prevPointable)
 		{
 			prevPointable?.Unpointed();
 			pointable?.Pointed();
