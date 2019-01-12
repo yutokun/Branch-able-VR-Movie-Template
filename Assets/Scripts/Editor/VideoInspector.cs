@@ -4,7 +4,8 @@ using UnityEngine;
 [CustomEditor(typeof(Video))]
 public class VideoInspector : Editor
 {
-	SerializedProperty clip, nextIs, sentence, branches;
+	SerializedProperty clip, nextIs, sentence, branches, arraySize;
+	const int MaxArraySize = 5;
 
 	void OnEnable()
 	{
@@ -12,11 +13,13 @@ public class VideoInspector : Editor
 		nextIs = serializedObject.FindProperty("nextIs");
 		sentence = serializedObject.FindProperty("sentence");
 		branches = serializedObject.FindProperty("branches");
+		arraySize = serializedObject.FindProperty("currentBranchSize");
 	}
 
 	public override void OnInspectorGUI()
 	{
 //		base.OnInspectorGUI();
+		branches.arraySize = MaxArraySize;
 
 		EditorGUILayout.PropertyField(clip, new GUIContent("再生するビデオ"));
 		EditorGUILayout.PropertyField(nextIs, new GUIContent("次は"));
@@ -31,9 +34,9 @@ public class VideoInspector : Editor
 			EditorGUI.indentLevel = 0;
 
 			EditorGUILayout.Separator();
-			branches.arraySize = EditorGUILayout.IntSlider("選択肢の数", branches.arraySize, 1, 5);
+			arraySize.intValue = EditorGUILayout.IntSlider("選択肢の数", arraySize.intValue, 1, MaxArraySize);
 
-			for (var i = 0; i < branches.arraySize; i++)
+			for (var i = 0; i < arraySize.intValue; i++)
 			{
 				EditorGUI.indentLevel = 1;
 

@@ -24,11 +24,11 @@ public class BranchCreator : MonoBehaviour
 		transform.localScale = Vector3.zero;
 	}
 
-	public void Create(string sentence, Branch[] branches)
+	public void Create(string sentence, Branch[] branches, int branchSize)
 	{
 		text.text = sentence;
-		var startX = -((interval / 2) * (branches.Length - 1));
-		for (var i = 0; i < branches.Length; i++)
+		var startX = -((interval / 2) * (branchSize - 1));
+		for (var i = 0; i < branchSize; i++)
 		{
 			var obj = Instantiate(button, transform);
 			obj.transform.localPosition = new Vector3(startX + (interval * i), y, 0);

@@ -32,7 +32,7 @@ public class PlaybackController : MonoBehaviour
 		switch (currentNextIs)
 		{
 			case NextIs.Video:
-				branchCreator.Create(currentVideo.sentence, currentVideo.branches);
+				branchCreator.Create(currentVideo.sentence, currentVideo.branches, currentVideo.currentBranchSize);
 				break;
 
 			case NextIs.End:

@@ -46,4 +46,15 @@ MonoBehaviour:
   clip: {fileID: 0}
   nextIs: 0
   sentence: 
-  branches: []
+  branches:
+  - video: {fileID: 0}
+    text: 
+  - video: {fileID: 0}
+    text: 
+  - video: {fileID: 0}
+    text: 
+  - video: {fileID: 0}
+    text: 
+  - video: {fileID: 0}
+    text: 
+  currentBranchSize: 0

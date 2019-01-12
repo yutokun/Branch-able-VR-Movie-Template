@@ -25,6 +25,7 @@ public class Video : MonoBehaviour
 
 	[Multiline] public string sentence;
 	public Branch[] branches;
+	public int currentBranchSize;
 
 	void Awake()
 	{
