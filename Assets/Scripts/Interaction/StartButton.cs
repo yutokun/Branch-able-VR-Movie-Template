@@ -14,7 +14,7 @@ public class StartButton : MonoBehaviour, IPointable
 	public void Click()
 	{
 		SoundEffectPlayer.PlayClickSound();
-		Tween.Scale(this, transform.parent, 0f, 0.5f);
+		transform.parent.Scale(0f, 0.5f);
 		Invoke(nameof(Play), 0.5f);
 	}
 

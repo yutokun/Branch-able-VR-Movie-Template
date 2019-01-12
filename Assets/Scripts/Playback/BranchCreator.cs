@@ -39,12 +39,12 @@ public class BranchCreator : MonoBehaviour
 #endif
 		}
 
-		Tween.Scale(this, transform, 1f, 0.5f);
+		transform.Scale(1f, 0.5f);
 	}
 
 	public void Destroy()
 	{
-		Tween.Scale(this, transform, 0f, 0.5f);
+		transform.Scale(0f, 0.5f);
 		Invoke(nameof(RemoveChildren), 0.5f);
 	}
 

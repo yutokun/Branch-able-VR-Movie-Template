@@ -77,7 +77,7 @@ public class PlaybackController : MonoBehaviour
 		{
 			item.gameObject.SetActive(true);
 			item.color = Color.clear;
-			Tween.FadeText(this, item, Color.white, 1f);
+			item.FadeText(Color.white, 1f);
 		}
 	}
 }

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public static class Tween
 {
-	public static Coroutine Scale(MonoBehaviour self, Transform target, float scale, float duration)
+	public static Coroutine Scale(this Transform target, float scale, float duration)
 	{
-		return self.StartCoroutine(ScaleCoroutine(target, scale, duration));
+		return target.GetComponent<MonoBehaviour>().StartCoroutine(ScaleCoroutine(target, scale, duration));
 	}
 
 	static IEnumerator ScaleCoroutine(Transform target, float scale, float duration)
@@ -22,12 +22,12 @@ public static class Tween
 		}
 	}
 
-	public static Coroutine FadeText(MonoBehaviour self, TextMeshPro target, Color color, float duration)
+	public static Coroutine FadeText(this TextMeshPro target, Color color, float duration)
 	{
-		return self.StartCoroutine(FadeText(target, color, duration));
+		return target.GetComponent<MonoBehaviour>().StartCoroutine(FadeTextCoroutine(target, color, duration));
 	}
 
-	static IEnumerator FadeText(TextMeshPro target, Color color, float duration)
+	static IEnumerator FadeTextCoroutine(TextMeshPro target, Color color, float duration)
 	{
 		var initial = target.color;
 		var startTime = Time.time;
