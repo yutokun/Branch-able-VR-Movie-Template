@@ -29,22 +29,16 @@ public class BackgroundSound : MonoBehaviour
 		switch (situation)
 		{
 			case Situation.Start:
-				if (startClip) Audio.clip = startClip;
+				if (startClip) Play(startClip);
 				break;
 
 			case Situation.Intermission:
-				if (intermissionClip) Audio.clip = intermissionClip;
+				if (intermissionClip) Play(intermissionClip);
 				break;
 
 			case Situation.End:
-				if (endClip) Audio.clip = endClip;
+				if (endClip) Play(endClip);
 				break;
-		}
-
-		if (Audio.clip)
-		{
-			Audio.volume = 1f;
-			Audio.Play();
 		}
 	}
 
