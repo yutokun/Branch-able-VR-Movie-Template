@@ -62,4 +62,23 @@ public static class Tween
 
 		onComplete?.Invoke();
 	}
+
+	public static Coroutine FadeVolume(this AudioSource audio, float volume, float duration, Action onComplete = null)
+	{
+		return TweenBase.instance.StartCoroutine(FadeVolumeCoroutine(audio, volume, duration, onComplete));
+	}
+
+	static IEnumerator FadeVolumeCoroutine(AudioSource audio, float volume, float duration, Action onComplete = null)
+	{
+		var initial = audio.volume;
+		var startTime = Time.time;
+		while (audio.volume != volume)
+		{
+			var lerpTime = (Time.time - startTime) / duration;
+			audio.volume = Mathf.Lerp(initial, volume, lerpTime);
+			yield return null;
+		}
+
+		onComplete?.Invoke();
+	}
 }

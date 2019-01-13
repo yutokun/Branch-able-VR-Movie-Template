@@ -33,10 +33,12 @@ public class PlaybackController : MonoBehaviour
 		{
 			case NextIs.Video:
 				branchCreator.Create(currentVideo.sentence, currentVideo.branches, currentVideo.currentBranchSize);
+				BackgroundSound.Play(Situation.Intermission);
 				break;
 
 			case NextIs.End:
 				ShowEndPanel();
+				BackgroundSound.Play(Situation.End);
 				break;
 		}
 
@@ -47,6 +49,7 @@ public class PlaybackController : MonoBehaviour
 	public void PlayFirstVideo()
 	{
 		Play(firstVideo.clip, firstVideo.nextIs, firstVideo);
+		BackgroundSound.Stop();
 	}
 
 	public void Play(VideoClip clip, NextIs nextIs, Video video)
@@ -59,6 +62,7 @@ public class PlaybackController : MonoBehaviour
 
 		player.clip = clip;
 		player.Play();
+		BackgroundSound.Stop();
 		Debug.Log("Playing " + clip.name);
 
 		foreach (var item in pointers) item.SetRunningState(false);
