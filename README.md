@@ -75,13 +75,15 @@ Main シーンの Systems 以下にある、**Sound Effects** オブジェクト
 - Windows 上で 8K × 8K（H.265）までの滑らかな再生には [LAV Filters](https://github.com/Nevcairiel/LAVFilters) と Pascal（10xxシリーズ）以降の GPU が必要になります。
 - Oculus Go は 4K × 4K までの H.264 を再生できます。
 
+## Special Thanks
+
+**サンプル動画の提供**  
+[υμβραν さん](https://twitter.com/Umbrasan) ありがとうございます！
+
 ## Licenses
 
 **This Project**  
 [MIT License](LICENSE)
-
-**Sample Movies**  
-[υμβραν さん](https://twitter.com/Umbrasan) ありがとうございます！
 
 **Oculus Integration**  
 Copyright © 2014-2017 Oculus VR, LLC. All rights reserved,
