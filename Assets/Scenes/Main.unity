@@ -2361,7 +2361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 158f167af76567e47a103ec1f5b941a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 1
+  duration: 2
   credits:
   - creditType: 0
     text: "\u5236\u4F5C\u30FB\u8457\u4F5C\n\u3086\u30FC\u3068VR"
