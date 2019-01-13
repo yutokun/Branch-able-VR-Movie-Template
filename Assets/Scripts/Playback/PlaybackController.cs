@@ -45,6 +45,7 @@ public class PlaybackController : MonoBehaviour
 
 			case NextIs.Credits:
 				StartCoroutine(credits.Play());
+				BackgroundSound.Play(Situation.End);
 				break;
 
 			case NextIs.End:
