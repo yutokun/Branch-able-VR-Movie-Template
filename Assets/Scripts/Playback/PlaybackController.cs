@@ -1,5 +1,4 @@
 ﻿using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Video;
 
@@ -74,7 +73,7 @@ public class PlaybackController : MonoBehaviour
 		BackgroundSound.Stop();
 		Debug.Log("Playing " + clip.name);
 
-		foreach (var item in pointers) item.SetRunningState(false);
+		foreach (var pointer in pointers) pointer.SetRunningState(false);
 		controllerVisible.ChangeAlpha(0f);
 		currentNextIs = nextIs;
 		currentVideo = video;
