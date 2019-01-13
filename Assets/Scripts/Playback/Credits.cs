@@ -25,6 +25,8 @@ public class Credits : MonoBehaviour
 	TextMeshProUGUI textMesh;
 	Image image;
 
+	[SerializeField] float duration = 1f;
+
 	[SerializeField] Credit[] credits;
 	int current;
 
@@ -55,7 +57,7 @@ public class Credits : MonoBehaviour
 		textMesh.CrossFadeAlpha(0f, 1f, true);
 		image.CrossFadeAlpha(0f, 1f, true);
 
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(1f + duration);
 
 		switch (credits[current].creditType)
 		{
@@ -87,6 +89,10 @@ public class CreditsInspector : Editor
 	{
 //		base.OnInspectorGUI();
 //		EditorGUILayout.Separator();
+
+		EditorGUILayout.PropertyField(serializedObject.FindProperty("duration"), new GUIContent("各クレジットの表示時間（秒）"));
+
+		EditorGUILayout.Separator();
 
 		EditorGUILayout.LabelField("クレジット表記");
 
