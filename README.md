@@ -49,7 +49,7 @@ Main シーンの Systems 以下にある、**Background Sound** オブジェク
 ボタンを選ぶ時のポイント・クリック音は、  
 Main シーンの Systems 以下にある、**Sound Effects** オブジェクトで変更できます。
 
-![Sound Effects](docs/Sound%20ffects.png)
+![Sound Effects](docs/Sound%20Effects.png)
 
 ## 操作方法
 
