@@ -34,6 +34,23 @@ Video プレハブを Hierarchy に配置していき、**動画同士の連結�
 Main シーンの Systems 以下にある、**Start と End オブジェクト** が開始・終了時に表示されます。
 好きな文章や内容に変更して下さい。
 
+### サウンドの変更
+
+開始前・選択肢場面・終了後の3場面で任意の背景音を流せます。  
+Main シーンの Systems 以下にある、**Background Sound** オブジェクトに流したい音声をセットして下さい。
+
+![Background Sound](docs/Background Sound.png)
+
+また、特定の選択肢場面で違う音を流したい事があると思います（毛色の変わる時とか）。  
+この場合は目的の Video オブジェクトに音声をセットして下さい。
+
+![Background Sound Override](docs/Background Sound Override.png)
+
+ボタンを選ぶ時のポイント・クリック音は、  
+Main シーンの Systems 以下にある、**Sound Effects** オブジェクトで変更できます。
+
+![Sound Effects](docs/Sound Effects.png)
+
 ## 操作方法
 
 ハンドコントローラーで操作できますが、Unity 上ではキーボードでも操作できるようになっています。
