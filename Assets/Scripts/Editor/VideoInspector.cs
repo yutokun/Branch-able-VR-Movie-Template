@@ -5,13 +5,14 @@ using UnityEngine;
 [CustomEditor(typeof(Video))]
 public class VideoInspector : Editor
 {
-	SerializedProperty clip, nextIs, sentence, branches, arraySize, overrideSoundOnBranch;
+	SerializedProperty clip, nextIs, rotationOffset, sentence, branches, arraySize, overrideSoundOnBranch;
 	const int MaxArraySize = 5;
 
 	void OnEnable()
 	{
 		clip = serializedObject.FindProperty("clip");
 		nextIs = serializedObject.FindProperty("nextIs");
+		rotationOffset = serializedObject.FindProperty("rotationOffset");
 		sentence = serializedObject.FindProperty("sentence");
 		branches = serializedObject.FindProperty("branches");
 		arraySize = serializedObject.FindProperty("currentBranchSize");
@@ -25,6 +26,7 @@ public class VideoInspector : Editor
 
 		EditorGUILayout.PropertyField(clip, new GUIContent("再生するビデオ"));
 		EditorGUILayout.PropertyField(nextIs, new GUIContent("次は"));
+		EditorGUILayout.PropertyField(rotationOffset, new GUIContent("回転のオフセット（度）"));
 
 		switch ((NextIs) nextIs.enumValueIndex)
 		{

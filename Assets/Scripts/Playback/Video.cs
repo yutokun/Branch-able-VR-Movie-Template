@@ -23,6 +23,7 @@ public class Video : MonoBehaviour
 	PlaybackController player;
 	public VideoClip clip;
 	public NextIs nextIs;
+	[Range(-180f, 180f)] public float rotationOffset;
 
 	[Multiline] public string sentence;
 	public Branch[] branches;
@@ -43,5 +44,6 @@ public class Video : MonoBehaviour
 	void OnValidate()
 	{
 		name = "Video" + (clip ? ": " + clip.name : "");
+		if (player) player.SetRotation(rotationOffset);
 	}
 }

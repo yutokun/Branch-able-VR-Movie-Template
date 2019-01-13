@@ -72,6 +72,8 @@ public class PlaybackController : MonoBehaviour
 		var layout = clip.name.EndsWith("_TB", StringComparison.OrdinalIgnoreCase) ? 2 : 0;
 		material.SetFloat("_Layout", layout);
 
+		material.SetFloat("_Rotation", Mathf.Repeat(video.rotationOffset + 90f, 360f));
+
 		player.clip = clip;
 		player.Play();
 		BackgroundSound.Stop();
@@ -81,6 +83,13 @@ public class PlaybackController : MonoBehaviour
 		controllerVisible.ChangeAlpha(0f);
 		currentNextIs = nextIs;
 		currentVideo = video;
+	}
+
+	public void SetRotation(float rotation)
+	{
+		// Panoramic シェーダーのデフォルトオフセット90度を勘案
+		material.SetFloat("_Rotation", Mathf.Repeat(rotation + 90f, 360f));
+		Debug.Log("Set Rotation to " + Mathf.Repeat(rotation + 90f, 360f));
 	}
 
 #if UNITY_EDITOR
