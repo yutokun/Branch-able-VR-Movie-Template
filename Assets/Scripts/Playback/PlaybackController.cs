@@ -7,9 +7,9 @@ public class PlaybackController : MonoBehaviour
 {
 	[SerializeField] VideoPlayer player;
 	[SerializeField] Material material;
-	[SerializeField] GameObject end;
 	[SerializeField] BranchCreator branchCreator;
 	[SerializeField] Credits credits;
+	[SerializeField] End end;
 	[SerializeField] ControllerVisiblity controllerVisible;
 	[SerializeField] Pointer[] pointers;
 
@@ -24,7 +24,6 @@ public class PlaybackController : MonoBehaviour
 
 		player.prepareCompleted += source => material.SetColor("_Tint", new Color(0.5f, 0.5f, 0.5f, 0.5f));
 
-		end.SetActive(false);
 		player.loopPointReached += OnVideoEnd;
 	}
 
@@ -47,12 +46,12 @@ public class PlaybackController : MonoBehaviour
 
 			case NextIs.End:
 				StartCoroutine(credits.Play());
-				ShowEndPanel();
+				end.Show();
 				BackgroundSound.Play(Situation.End);
 				break;
 		}
 
-		foreach (var item in pointers) item.SetRunningState(true);
+		foreach (var pointer in pointers) pointer.SetRunningState(true);
 		controllerVisible.ChangeAlpha(1f);
 	}
 
@@ -79,17 +78,6 @@ public class PlaybackController : MonoBehaviour
 		controllerVisible.ChangeAlpha(0f);
 		currentNextIs = nextIs;
 		currentVideo = video;
-	}
-
-	void ShowEndPanel()
-	{
-		end.SetActive(true);
-		foreach (var item in end.GetComponentsInChildren<TextMeshPro>())
-		{
-			item.gameObject.SetActive(true);
-			item.color = Color.clear;
-			item.FadeText(Color.white, 1f);
-		}
 	}
 
 #if UNITY_EDITOR
