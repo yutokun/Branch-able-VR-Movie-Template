@@ -67,16 +67,6 @@ public class PlaybackController : MonoBehaviour
 		currentVideo = video;
 	}
 
-#if UNITY_EDITOR
-	void Update()
-	{
-		if (player.isPlaying && Input.GetKeyDown(KeyCode.Return))
-		{
-			player.time = player.clip.length;
-		}
-	}
-#endif
-
 	void ShowEndPanel()
 	{
 		end.SetActive(true);
@@ -87,4 +77,26 @@ public class PlaybackController : MonoBehaviour
 			item.FadeText(Color.white, 1f);
 		}
 	}
+
+#if UNITY_EDITOR
+	Color initialColor;
+
+	void Awake()
+	{
+		initialColor = material.GetColor("_Tint");
+	}
+
+	void OnApplicationQuit()
+	{
+		material.SetColor("_Tint", initialColor);
+	}
+
+	void Update()
+	{
+		if (player.isPlaying && Input.GetKeyDown(KeyCode.Return))
+		{
+			player.time = player.clip.length;
+		}
+	}
+#endif
 }
