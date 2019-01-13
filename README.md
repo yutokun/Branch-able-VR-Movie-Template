@@ -39,17 +39,17 @@ Main シーンの Systems 以下にある、**Start と End オブジェクト**
 開始前・選択肢場面・終了後の3場面で任意の背景音を流せます。  
 Main シーンの Systems 以下にある、**Background Sound** オブジェクトに流したい音声をセットして下さい。
 
-![Background Sound](docs/Background Sound.png)
+![Background Sound](docs/Background%20Sound.png)
 
 また、特定の選択肢場面で違う音を流したい事があると思います（毛色の変わる時とか）。  
 この場合は目的の Video オブジェクトに音声をセットして下さい。
 
-![Background Sound Override](docs/Background Sound Override.png)
+![Background Sound Override](docs/Background%20Sound%20Override.png)
 
 ボタンを選ぶ時のポイント・クリック音は、  
 Main シーンの Systems 以下にある、**Sound Effects** オブジェクトで変更できます。
 
-![Sound Effects](docs/Sound Effects.png)
+![Sound Effects](docs/Sound%20ffects.png)
 
 ## 操作方法
 
