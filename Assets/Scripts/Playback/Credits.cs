@@ -25,7 +25,7 @@ public class Credits : MonoBehaviour
 	TextMeshProUGUI textMesh;
 	Image image;
 
-	[SerializeField] float duration = 1f;
+	[SerializeField] float duration = 2f;
 
 	[SerializeField] Credit[] credits;
 	int current;
@@ -49,6 +49,10 @@ public class Credits : MonoBehaviour
 			++current;
 		}
 
+		textMesh.CrossFadeAlpha(0f, 1f, true);
+		image.CrossFadeAlpha(0f, 1f, true);
+		yield return new WaitForSeconds(1f);
+
 		endPanel.Show();
 	}
 
@@ -57,7 +61,7 @@ public class Credits : MonoBehaviour
 		textMesh.CrossFadeAlpha(0f, 1f, true);
 		image.CrossFadeAlpha(0f, 1f, true);
 
-		yield return new WaitForSeconds(1f + duration);
+		yield return new WaitForSeconds(1f);
 
 		switch (credits[current].creditType)
 		{
@@ -71,6 +75,8 @@ public class Credits : MonoBehaviour
 				image.CrossFadeAlpha(1f, 1f, true);
 				break;
 		}
+
+		yield return new WaitForSeconds(1f + duration);
 	}
 }
 
