@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(Video))]
@@ -25,51 +26,53 @@ public class VideoInspector : Editor
 		EditorGUILayout.PropertyField(clip, new GUIContent("再生するビデオ"));
 		EditorGUILayout.PropertyField(nextIs, new GUIContent("次は"));
 
-		if (nextIs.enumValueIndex == (int) NextIs.Video)
+		switch ((NextIs) nextIs.enumValueIndex)
 		{
-			EditorGUILayout.Separator();
+			case NextIs.Video:
+				EditorGUILayout.Separator();
 
-			EditorGUILayout.LabelField("選択肢の設定");
-
-			EditorGUILayout.Separator();
-
-			EditorGUI.indentLevel = 1;
-			EditorGUILayout.PrefixLabel("文章");
-			EditorGUI.indentLevel = 2;
-			sentence.stringValue = EditorGUILayout.TextArea(sentence.stringValue, GUILayout.Height(60f));
-			EditorGUI.indentLevel = 1;
-
-			EditorGUILayout.Separator();
-			arraySize.intValue = EditorGUILayout.IntSlider("選択肢の数", arraySize.intValue, 1, MaxArraySize);
-
-			for (var i = 0; i < arraySize.intValue; i++)
-			{
-				EditorGUI.indentLevel = 2;
+				EditorGUILayout.LabelField("選択肢の設定");
 
 				EditorGUILayout.Separator();
-				EditorGUILayout.LabelField("選択肢 " + (i + 1), EditorStyles.boldLabel);
 
-				EditorGUI.indentLevel = 3;
+				EditorGUI.indentLevel = 1;
+				EditorGUILayout.PrefixLabel("文章");
+				EditorGUI.indentLevel = 2;
+				sentence.stringValue = EditorGUILayout.TextArea(sentence.stringValue, GUILayout.Height(60f));
+				EditorGUI.indentLevel = 1;
 
-				var video = branches.GetArrayElementAtIndex(i).FindPropertyRelative("video");
-				EditorGUILayout.PropertyField(video, new GUIContent("ビデオ"));
+				EditorGUILayout.Separator();
+				arraySize.intValue = EditorGUILayout.IntSlider("選択肢の数", arraySize.intValue, 1, MaxArraySize);
 
-				var text = branches.GetArrayElementAtIndex(i).FindPropertyRelative("text");
-				EditorGUILayout.PropertyField(text, new GUIContent("ボタンのテキスト"));
-			}
+				for (var i = 0; i < arraySize.intValue; i++)
+				{
+					EditorGUI.indentLevel = 2;
 
-			EditorGUI.indentLevel = 1;
+					EditorGUILayout.Separator();
+					EditorGUILayout.LabelField("選択肢 " + (i + 1), EditorStyles.boldLabel);
 
-			EditorGUILayout.Separator();
-			EditorGUILayout.PropertyField(overrideSoundOnBranch, new GUIContent("この背景音で上書き"));
-		}
-		else if (nextIs.enumValueIndex == (int) NextIs.Credits)
-		{
-			EditorGUILayout.HelpBox("動画「" + clip.objectReferenceValue.name + "」の再生が終わると、エンドクレジットへ移行します。", MessageType.Info);
-		}
-		else if (nextIs.enumValueIndex == (int) NextIs.End)
-		{
-			EditorGUILayout.HelpBox("動画「" + clip.objectReferenceValue.name + "」の再生が終わると、終了メッセージへ移行します。", MessageType.Info);
+					EditorGUI.indentLevel = 3;
+
+					var video = branches.GetArrayElementAtIndex(i).FindPropertyRelative("video");
+					EditorGUILayout.PropertyField(video, new GUIContent("ビデオ"));
+
+					var text = branches.GetArrayElementAtIndex(i).FindPropertyRelative("text");
+					EditorGUILayout.PropertyField(text, new GUIContent("ボタンのテキスト"));
+				}
+
+				EditorGUI.indentLevel = 1;
+
+				EditorGUILayout.Separator();
+				EditorGUILayout.PropertyField(overrideSoundOnBranch, new GUIContent("この背景音で上書き"));
+				break;
+
+			case NextIs.Credits:
+				EditorGUILayout.HelpBox("動画「" + clip.objectReferenceValue.name + "」の再生が終わると、エンドクレジットへ移行します。", MessageType.Info);
+				break;
+
+			case NextIs.End:
+				EditorGUILayout.HelpBox("動画「" + clip.objectReferenceValue.name + "」の再生が終わると、終了メッセージへ移行します。", MessageType.Info);
+				break;
 		}
 
 		serializedObject.ApplyModifiedProperties();
