@@ -27,6 +27,8 @@ public class Video : MonoBehaviour
 	public Branch[] branches;
 	public int currentBranchSize;
 
+	public AudioClip overrideSoundOnBranch;
+
 	void Awake()
 	{
 		player = FindObjectOfType<PlaybackController>();

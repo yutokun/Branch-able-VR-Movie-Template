@@ -33,7 +33,15 @@ public class PlaybackController : MonoBehaviour
 		{
 			case NextIs.Video:
 				branchCreator.Create(currentVideo.sentence, currentVideo.branches, currentVideo.currentBranchSize);
-				BackgroundSound.Play(Situation.Intermission);
+				if (currentVideo.overrideSoundOnBranch)
+				{
+					BackgroundSound.Play(currentVideo.overrideSoundOnBranch);
+				}
+				else
+				{
+					BackgroundSound.Play(Situation.Intermission);
+				}
+
 				break;
 
 			case NextIs.End:

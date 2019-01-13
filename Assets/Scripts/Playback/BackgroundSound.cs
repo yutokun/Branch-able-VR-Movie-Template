@@ -48,6 +48,13 @@ public class BackgroundSound : MonoBehaviour
 		}
 	}
 
+	public static void Play(AudioClip clip)
+	{
+		Audio.clip = clip;
+		Audio.volume = 1f;
+		Audio.Play();
+	}
+
 	public static void Stop(float duration = 0.5f)
 	{
 		if (Audio.isPlaying)

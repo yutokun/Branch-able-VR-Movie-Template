@@ -58,3 +58,4 @@ MonoBehaviour:
   - video: {fileID: 0}
     text: 
   currentBranchSize: 0
+  overrideSoundOnBranch: {fileID: 0}
