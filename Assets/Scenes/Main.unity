@@ -394,8 +394,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 91176614}
   material: {fileID: 2100000, guid: c69dd16db8411cc4f8fe0149ff8513aa, type: 2}
-  end: {fileID: 1995049775}
   branchCreator: {fileID: 1376620099}
+  credits: {fileID: 1483931897}
+  endPanel: {fileID: 1995049777}
   controllerVisible: {fileID: 70945539}
   pointers:
   - {fileID: 552232960}
@@ -3032,6 +3033,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1995049776}
+  - component: {fileID: 1995049777}
   m_Layer: 0
   m_Name: End
   m_TagString: Untagged
@@ -3055,3 +3057,15 @@ Transform:
   m_Father: {fileID: 70945534}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1995049777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1995049775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7b45071d41417446b63ec9ccc788a5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -8,7 +8,7 @@ public class PlaybackController : MonoBehaviour
 	[SerializeField] Material material;
 	[SerializeField] BranchCreator branchCreator;
 	[SerializeField] Credits credits;
-	[SerializeField] End end;
+	[SerializeField] End endPanel;
 	[SerializeField] ControllerVisiblity controllerVisible;
 	[SerializeField] Pointer[] pointers;
 
@@ -43,9 +43,12 @@ public class PlaybackController : MonoBehaviour
 
 				break;
 
-			case NextIs.End:
+			case NextIs.Credits:
 				StartCoroutine(credits.Play());
-				end.Show();
+				break;
+
+			case NextIs.End:
+				endPanel.Show();
 				BackgroundSound.Play(Situation.End);
 				break;
 		}

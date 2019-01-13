@@ -28,12 +28,15 @@ public class Credits : MonoBehaviour
 	[SerializeField] Credit[] credits;
 	int current;
 
+	End endPanel;
+
 	void Awake()
 	{
 		textMesh = GetComponentInChildren<TextMeshProUGUI>();
 		textMesh.CrossFadeAlpha(0f, 0f, true);
 		image = GetComponentInChildren<Image>();
 		image.CrossFadeAlpha(0f, 0f, true);
+		endPanel = FindObjectOfType<End>();
 	}
 
 	public IEnumerator Play()
@@ -43,6 +46,8 @@ public class Credits : MonoBehaviour
 			yield return StartCoroutine(Next());
 			++current;
 		}
+
+		endPanel.Show();
 	}
 
 	IEnumerator Next()

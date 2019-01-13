@@ -11,6 +11,7 @@ public struct Branch
 public enum NextIs
 {
 	Video,
+	Credits,
 	End
 }
 

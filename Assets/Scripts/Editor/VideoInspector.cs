@@ -63,6 +63,10 @@ public class VideoInspector : Editor
 			EditorGUILayout.Separator();
 			EditorGUILayout.PropertyField(overrideSoundOnBranch, new GUIContent("この背景音で上書き"));
 		}
+		else if (nextIs.enumValueIndex == (int) NextIs.Credits)
+		{
+			EditorGUILayout.HelpBox("動画「" + clip.objectReferenceValue.name + "」の再生が終わると、エンドクレジットへ移行します。", MessageType.Info);
+		}
 		else if (nextIs.enumValueIndex == (int) NextIs.End)
 		{
 			EditorGUILayout.HelpBox("動画「" + clip.objectReferenceValue.name + "」の再生が終わると、終了メッセージへ移行します。", MessageType.Info);
