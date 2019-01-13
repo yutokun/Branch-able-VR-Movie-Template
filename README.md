@@ -80,5 +80,8 @@ Main シーンの Systems 以下にある、**Sound Effects** オブジェクト
 **This Project**  
 [MIT License](LICENSE)
 
+**Sample Movies**  
+[υμβραν さん](https://twitter.com/Umbrasan) ありがとうございます！
+
 **Oculus Integration**  
 Copyright © 2014-2017 Oculus VR, LLC. All rights reserved,
