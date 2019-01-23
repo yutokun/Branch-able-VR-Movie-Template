@@ -39,11 +39,16 @@ public class BranchCreator : MonoBehaviour
 #endif
 		}
 
-		transform.Scale(1f, 0.5f);
+		transform.Scale(1f, 0.5f, () =>
+		{
+			foreach (var nextButton in nextButtons) nextButton.isClickable = true;
+		});
 	}
 
 	public void Destroy()
 	{
+		foreach (var nextButton in nextButtons) nextButton.isClickable = false;
+		nextButtons.Clear();
 		transform.Scale(0f, 0.5f, RemoveChildren);
 	}
 
@@ -68,7 +73,6 @@ public class BranchCreator : MonoBehaviour
 					if (key <= nextButtons.Count)
 					{
 						nextButtons[key - 1].Click();
-						nextButtons.Clear();
 						break;
 					}
 				}

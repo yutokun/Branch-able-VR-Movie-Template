@@ -3,6 +3,7 @@
 public class NextButton : MonoBehaviour, IPointable
 {
 	[HideInInspector] public Video video;
+	[HideInInspector] public bool isClickable;
 
 	public void Pointed()
 	{
@@ -13,6 +14,8 @@ public class NextButton : MonoBehaviour, IPointable
 
 	public void Click()
 	{
+		if (!isClickable) return;
+		
 		SoundEffectPlayer.PlayClickSound();
 		video.Play();
 		GetComponentInParent<BranchCreator>().Destroy();
