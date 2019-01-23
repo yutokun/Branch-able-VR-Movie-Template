@@ -43,6 +43,7 @@ Thumbs.db
 *.apk
 *.obb
 user.keystore
+.gradle/
 
 *.log #log files, for some plugins
 *.pyc #python bytecode cache, for some plugins.
