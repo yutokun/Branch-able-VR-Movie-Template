@@ -4,6 +4,7 @@ public class StartButton : MonoBehaviour, IPointable
 {
 	[SerializeField] PlaybackController player;
 	[SerializeField] Transform startParent;
+	bool clicked;
 
 	public void Pointed()
 	{
@@ -14,6 +15,9 @@ public class StartButton : MonoBehaviour, IPointable
 
 	public void Click()
 	{
+		if (clicked) return;
+		clicked = true;
+
 		SoundEffectPlayer.PlayClickSound();
 		startParent.Scale(0f, 0.5f, onComplete: Play);
 	}
