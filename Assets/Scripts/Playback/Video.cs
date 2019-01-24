@@ -119,18 +119,18 @@ public class VideoInspector : Editor
 				break;
 
 			case NextIs.Credits:
-				ShowHelpBox("エンドクレジット");
+				ShowDestination("エンドクレジット");
 				break;
 
 			case NextIs.End:
-				ShowHelpBox("終了メッセージ");
+				ShowDestination("終了メッセージ");
 				break;
 		}
 
 		serializedObject.ApplyModifiedProperties();
 	}
 
-	void ShowHelpBox(string destination)
+	void ShowDestination(string destination)
 	{
 		if (clip.objectReferenceValue == null) return;
 		EditorGUILayout.HelpBox($"動画「{clip.objectReferenceValue.name}」の再生が終わると、{destination}へ移行します。", MessageType.Info);
