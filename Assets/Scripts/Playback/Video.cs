@@ -119,15 +119,21 @@ public class VideoInspector : Editor
 				break;
 
 			case NextIs.Credits:
-				EditorGUILayout.HelpBox("動画「" + clip.objectReferenceValue.name + "」の再生が終わると、エンドクレジットへ移行します。", MessageType.Info);
+				ShowHelpBox("エンドクレジット");
 				break;
 
 			case NextIs.End:
-				EditorGUILayout.HelpBox("動画「" + clip.objectReferenceValue.name + "」の再生が終わると、終了メッセージへ移行します。", MessageType.Info);
+				ShowHelpBox("終了メッセージ");
 				break;
 		}
 
 		serializedObject.ApplyModifiedProperties();
+	}
+
+	void ShowHelpBox(string destination)
+	{
+		if (clip.objectReferenceValue == null) return;
+		EditorGUILayout.HelpBox($"動画「{clip.objectReferenceValue.name}」の再生が終わると、{destination}へ移行します。", MessageType.Info);
 	}
 }
 #endif
