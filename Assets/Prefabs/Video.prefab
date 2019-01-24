@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clip: {fileID: 0}
-  nextIs: 0
   rotationOffset: 0
+  nextIs: 0
   sentence: 
   branches:
   - video: {fileID: 0}

@@ -25,8 +25,8 @@ public class Video : MonoBehaviour
 {
 	PlaybackController player;
 	public VideoClip clip;
-	public NextIs nextIs;
 	[Range(-180f, 180f)] public float rotationOffset;
+	public NextIs nextIs;
 
 	[Multiline] public string sentence;
 	public Branch[] branches;
@@ -75,8 +75,8 @@ public class VideoInspector : Editor
 		branches.arraySize = MaxArraySize;
 
 		EditorGUILayout.PropertyField(clip, new GUIContent("再生するビデオ"));
-		EditorGUILayout.PropertyField(nextIs, new GUIContent("次は"));
 		EditorGUILayout.PropertyField(rotationOffset, new GUIContent("回転のオフセット（度）"));
+		EditorGUILayout.PropertyField(nextIs, new GUIContent("次は"));
 
 		switch ((NextIs) nextIs.enumValueIndex)
 		{
@@ -132,8 +132,8 @@ public class VideoInspector : Editor
 
 	void ShowDestination(string destination)
 	{
-		if (clip.objectReferenceValue == null) return;
-		EditorGUILayout.HelpBox($"動画「{clip.objectReferenceValue.name}」の再生が終わると、{destination}へ移行します。", MessageType.Info);
+		var name = clip.objectReferenceValue ? $"動画「{clip.objectReferenceValue.name}」" : "上にセットされた動画";
+		EditorGUILayout.HelpBox($"{name}の再生が終わると、{destination}へ移行します。", MessageType.Info);
 	}
 }
 #endif
