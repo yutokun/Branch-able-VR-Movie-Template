@@ -13,6 +13,7 @@ public class Repeater : MonoBehaviour
 	{
 		if (BackButton)
 		{
+			System.GC.Collect();
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
 	}
