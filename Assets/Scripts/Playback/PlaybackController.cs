@@ -4,6 +4,8 @@ using UnityEngine.Video;
 
 public class PlaybackController : MonoBehaviour
 {
+	public static Action onStartPlaying;
+
 	[SerializeField] VideoPlayer player;
 	[SerializeField] Material material;
 	[SerializeField] BranchCreator branchCreator;
@@ -76,6 +78,7 @@ public class PlaybackController : MonoBehaviour
 
 		player.clip = clip;
 		player.Play();
+		onStartPlaying.Invoke();
 		BackgroundSound.Stop();
 		Debug.Log("Playing " + clip.name);
 
