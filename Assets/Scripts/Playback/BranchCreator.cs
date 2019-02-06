@@ -1,8 +1,8 @@
 ﻿#if UNITY_EDITOR
 using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 #endif
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -14,9 +14,7 @@ public class BranchCreator : MonoBehaviour
 	[SerializeField] GameObject button;
 	[SerializeField] TextMeshPro text;
 	[SerializeField] float y = -1f, interval = 1.1f;
-#if UNITY_EDITOR
 	List<NextButton> nextButtons = new List<NextButton>();
-#endif
 
 	void Start()
 	{
@@ -34,9 +32,7 @@ public class BranchCreator : MonoBehaviour
 			obj.transform.localPosition = new Vector3(startX + (interval * i), y, 0);
 			obj.GetComponentInChildren<TextMeshPro>().text = branches[i].text;
 			obj.GetComponentInChildren<NextButton>().video = branches[i].video;
-#if UNITY_EDITOR
 			nextButtons.Add(obj.GetComponentInChildren<NextButton>());
-#endif
 		}
 
 		transform.Scale(1f, 0.5f, () =>
