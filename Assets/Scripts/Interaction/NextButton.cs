@@ -10,7 +10,7 @@ public class NextButton : MonoBehaviour, IPointable
 		SoundEffectPlayer.PlayPointedSound();
 	}
 
-	public void Unpointed() { }
+	public void UnPointed() { }
 
 	public void Click()
 	{

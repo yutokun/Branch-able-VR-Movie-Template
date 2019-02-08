@@ -14,7 +14,7 @@ public class BatteryChecker : MonoBehaviour
 		PlaybackController.onStartPlaying += Hide;
 	}
 
-	public void Hide()
+	void Hide()
 	{
 		gameObject.SetActive(false);
 	}

@@ -2,10 +2,10 @@
 
 public class TweenBase : MonoBehaviour
 {
-	public static TweenBase instance;
+	public static TweenBase Instance { get; private set; }
 
 	void Awake()
 	{
-		instance = this;
+		Instance = this;
 	}
 }

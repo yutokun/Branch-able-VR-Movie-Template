@@ -33,7 +33,7 @@ public class Pointer : MonoBehaviour
 
 		if (pointable != prevPointable)
 		{
-			prevPointable?.Unpointed();
+			prevPointable?.UnPointed();
 			pointable?.Pointed();
 			prevPointable = pointable;
 		}

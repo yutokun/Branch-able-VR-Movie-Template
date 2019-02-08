@@ -7,7 +7,7 @@ public static class Tween
 {
 	public static Coroutine Scale(this Transform target, float scale, float duration, Action onComplete = null)
 	{
-		return TweenBase.instance.StartCoroutine(ScaleCoroutine(target, scale, duration, onComplete));
+		return TweenBase.Instance.StartCoroutine(ScaleCoroutine(target, scale, duration, onComplete));
 	}
 
 	static IEnumerator ScaleCoroutine(Transform target, float scale, float duration, Action onComplete = null)
@@ -27,7 +27,7 @@ public static class Tween
 
 	public static Coroutine FadeText(this TextMeshPro target, Color color, float duration, Action onComplete = null)
 	{
-		return TweenBase.instance.StartCoroutine(FadeTextCoroutine(target, color, duration, onComplete));
+		return TweenBase.Instance.StartCoroutine(FadeTextCoroutine(target, color, duration, onComplete));
 	}
 
 	static IEnumerator FadeTextCoroutine(TextMeshPro target, Color color, float duration, Action onComplete = null)
@@ -46,7 +46,7 @@ public static class Tween
 
 	public static Coroutine FadeMaterial(Material target, Color color, float duration, Action onComplete = null)
 	{
-		return TweenBase.instance.StartCoroutine(FadeMaterialCoroutine(target, color, duration, onComplete));
+		return TweenBase.Instance.StartCoroutine(FadeMaterialCoroutine(target, color, duration, onComplete));
 	}
 
 	static IEnumerator FadeMaterialCoroutine(Material target, Color color, float duration, Action onComplete = null)
@@ -65,7 +65,7 @@ public static class Tween
 
 	public static Coroutine FadeVolume(this AudioSource audio, float volume, float duration, Action onComplete = null)
 	{
-		return TweenBase.instance.StartCoroutine(FadeVolumeCoroutine(audio, volume, duration, onComplete));
+		return TweenBase.Instance.StartCoroutine(FadeVolumeCoroutine(audio, volume, duration, onComplete));
 	}
 
 	static IEnumerator FadeVolumeCoroutine(AudioSource audio, float volume, float duration, Action onComplete = null)

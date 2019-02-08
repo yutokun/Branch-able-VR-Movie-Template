@@ -11,7 +11,7 @@ public class StartButton : MonoBehaviour, IPointable
 		SoundEffectPlayer.PlayPointedSound();
 	}
 
-	public void Unpointed() { }
+	public void UnPointed() { }
 
 	public void Click()
 	{

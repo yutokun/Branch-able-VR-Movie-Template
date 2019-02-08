@@ -1,6 +1,6 @@
 ﻿interface IPointable
 {
 	void Pointed();
-	void Unpointed();
+	void UnPointed();
 	void Click();
 }
