@@ -11,7 +11,7 @@ public class PlaybackController : MonoBehaviour
 	[SerializeField] BranchCreator branchCreator;
 	[SerializeField] Credits credits;
 	[SerializeField] End endPanel;
-	[SerializeField] ControllerVisiblity controllerVisible;
+	[SerializeField] ControllerVisibility controllerVisible;
 	[SerializeField] Pointer[] pointers;
 
 	[SerializeField, Header("最初に再生するビデオ")] Video firstVideo;

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ControllerVisiblity : MonoBehaviour
+public class ControllerVisibility : MonoBehaviour
 {
 	[SerializeField] Material[] materials;
 
