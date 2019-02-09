@@ -4,6 +4,8 @@ using UnityEngine.Video;
 
 public class PlaybackController : MonoBehaviour
 {
+	public static PlaybackController Instance { get; private set; }
+
 	public static Action onStartPlaying;
 
 	[SerializeField] VideoPlayer player;
@@ -19,12 +21,15 @@ public class PlaybackController : MonoBehaviour
 
 	[HideInInspector] public NextIs currentNextIs;
 
+	void Awake()
+	{
+		Instance = this;
+	}
+
 	void Start()
 	{
 		material.SetColor("_Tint", Color.black);
-
 		player.prepareCompleted += source => material.SetColor("_Tint", new Color(0.5f, 0.5f, 0.5f, 0.5f));
-
 		player.loopPointReached += OnVideoEnd;
 	}
 
@@ -98,7 +103,7 @@ public class PlaybackController : MonoBehaviour
 #if UNITY_EDITOR
 	Color initialColor;
 
-	void Awake()
+	void OnEnable()
 	{
 		initialColor = material.GetColor("_Tint");
 	}

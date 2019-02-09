@@ -2,7 +2,7 @@
 
 public class StartButton : MonoBehaviour, IPointable
 {
-	[SerializeField] PlaybackController player;
+	static PlaybackController Player => PlaybackController.Instance;
 	[SerializeField] Transform startParent;
 	bool clicked;
 
@@ -24,7 +24,7 @@ public class StartButton : MonoBehaviour, IPointable
 
 	void Play()
 	{
-		player.PlayFirstVideo();
+		Player.PlayFirstVideo();
 		Destroy(transform.parent.gameObject);
 	}
 

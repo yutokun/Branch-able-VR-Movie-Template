@@ -23,7 +23,7 @@ public enum NextIs
 /// </summary>
 public class Video : MonoBehaviour
 {
-	PlaybackController player;
+	static PlaybackController Player => PlaybackController.Instance;
 	public VideoClip clip;
 	[Range(-180f, 180f)] public float rotationOffset;
 	public NextIs nextIs;
@@ -34,20 +34,16 @@ public class Video : MonoBehaviour
 
 	public AudioClip overrideSoundOnBranch;
 
-	void Awake()
-	{
-		player = FindObjectOfType<PlaybackController>();
-	}
-
 	public void Play()
 	{
-		player.Play(clip, nextIs, this);
+		Player.Play(clip, nextIs, this);
+		BranchCreator.Instance.Destroy();
 	}
 
 	void OnValidate()
 	{
 		name = "Video" + (clip ? ": " + clip.name : "");
-		if (player) player.SetRotation(rotationOffset);
+		if (Player) Player.SetRotation(rotationOffset);
 	}
 }
 

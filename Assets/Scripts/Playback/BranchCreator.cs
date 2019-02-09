@@ -11,13 +11,16 @@ using UnityEngine;
 /// </summary>
 public class BranchCreator : MonoBehaviour
 {
+	public static BranchCreator Instance { get; private set; }
+
 	[SerializeField] GameObject button;
 	[SerializeField] TextMeshPro text;
 	[SerializeField] float y = -1f, interval = 1.1f;
 	List<NextButton> nextButtons = new List<NextButton>();
 
-	void Start()
+	void Awake()
 	{
+		Instance = this;
 		text.text = "";
 		transform.localScale = Vector3.zero;
 	}
