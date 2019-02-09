@@ -8,7 +8,7 @@ public class StartButton : MonoBehaviour, IPointable
 
 	public void Pointed()
 	{
-		SoundEffectPlayer.PlayPointedSound();
+		SoundEffectPlayer.Play(SEType.Pointed);
 	}
 
 	public void UnPointed() { }
@@ -18,7 +18,7 @@ public class StartButton : MonoBehaviour, IPointable
 		if (clicked) return;
 		clicked = true;
 
-		SoundEffectPlayer.PlayClickSound();
+		SoundEffectPlayer.Play(SEType.Click);
 		startParent.Scale(0f, 0.5f, onComplete: Play);
 	}
 

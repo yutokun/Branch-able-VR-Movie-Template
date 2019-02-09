@@ -7,7 +7,7 @@ public class NextButton : MonoBehaviour, IPointable
 
 	public void Pointed()
 	{
-		SoundEffectPlayer.PlayPointedSound();
+		SoundEffectPlayer.Play(SEType.Pointed);
 	}
 
 	public void UnPointed() { }
@@ -15,8 +15,8 @@ public class NextButton : MonoBehaviour, IPointable
 	public void Click()
 	{
 		if (!isClickable) return;
-		
-		SoundEffectPlayer.PlayClickSound();
+
+		SoundEffectPlayer.Play(SEType.Click);
 		video.Play();
 		GetComponentInParent<BranchCreator>().Destroy();
 	}

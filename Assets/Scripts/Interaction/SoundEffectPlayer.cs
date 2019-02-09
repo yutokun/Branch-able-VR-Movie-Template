@@ -1,25 +1,39 @@
 ﻿using UnityEngine;
 
+public enum SEType
+{
+	Pointed,
+	Click
+}
+
 public class SoundEffectPlayer : MonoBehaviour
 {
-	new static AudioSource audio;
-	static AudioClip pointClip, clickClip;
+	static AudioSource Audio;
+	static AudioClip Point, Click;
 	[SerializeField] AudioClip point, click;
 
 	void Start()
 	{
-		audio = GetComponent<AudioSource>();
-		pointClip = point;
-		clickClip = click;
+		Audio = GetComponent<AudioSource>();
+		Point = point;
+		Click = click;
 	}
 
-	public static void PlayPointedSound()
+	public static void Play(SEType seType)
 	{
-		if (pointClip) audio.PlayOneShot(pointClip);
-	}
+		AudioClip clip = null;
 
-	public static void PlayClickSound()
-	{
-		if (clickClip) audio.PlayOneShot(clickClip);
+		switch (seType)
+		{
+			case SEType.Pointed:
+				clip = Point;
+				break;
+
+			case SEType.Click:
+				clip = Click;
+				break;
+		}
+
+		if (clip != null) Audio.PlayOneShot(clip);
 	}
 }
