@@ -7,10 +7,18 @@ public class NextButton : MonoBehaviour, IPointable
 
 	public void Pointed()
 	{
+		if (!isClickable) return;
+
 		SoundEffectPlayer.Play(SEType.Pointed);
+		transform.Scale(1.1f, 0.15f);
 	}
 
-	public void UnPointed() { }
+	public void UnPointed()
+	{
+		if (!isClickable) return;
+
+		transform.Scale(1f, 0.3f);
+	}
 
 	public void Click()
 	{

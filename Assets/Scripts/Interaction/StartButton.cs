@@ -10,10 +10,18 @@ public class StartButton : MonoBehaviour, IPointable
 
 	public void Pointed()
 	{
+		if (clicked) return;
+
 		SoundEffectPlayer.Play(SEType.Pointed);
+		button.Scale(1.1f, 0.15f);
 	}
 
-	public void UnPointed() { }
+	public void UnPointed()
+	{
+		if (clicked) return;
+
+		button.Scale(1f, 0.3f);
+	}
 
 	public void Click()
 	{
