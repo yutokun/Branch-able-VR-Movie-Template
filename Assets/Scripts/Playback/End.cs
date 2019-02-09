@@ -18,7 +18,11 @@ public class End : MonoBehaviour
 		foreach (var item in GetComponentsInChildren<TextMeshPro>())
 		{
 			item.gameObject.SetActive(true);
-			item.color = Color.clear;
+
+			var color = item.color;
+			color.a = 0f;
+			item.color = color;
+
 			item.FadeText(Color.white, 1f);
 		}
 	}
