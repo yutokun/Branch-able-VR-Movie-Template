@@ -102,15 +102,18 @@ public class PlaybackController : MonoBehaviour
 
 #if UNITY_EDITOR
 	Color initialColor;
+	float initialRotation;
 
 	void OnEnable()
 	{
 		initialColor = material.GetColor("_Tint");
+		initialRotation = material.GetFloat("_Rotation");
 	}
 
 	void OnApplicationQuit()
 	{
 		material.SetColor("_Tint", initialColor);
+		material.SetFloat("_Rotation", initialRotation);
 	}
 
 	void Update()
