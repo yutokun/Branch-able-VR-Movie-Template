@@ -19,7 +19,7 @@ public class PlaybackController : MonoBehaviour
 	[SerializeField, Header("最初に再生するビデオ")] Video firstVideo;
 	Video currentVideo;
 
-	[HideInInspector] public NextIs currentNextIs;
+	[HideInInspector] public NextIs nextProcess;
 
 	void Awake()
 	{
@@ -35,7 +35,7 @@ public class PlaybackController : MonoBehaviour
 
 	void OnVideoEnd(VideoPlayer source)
 	{
-		switch (currentNextIs)
+		switch (nextProcess)
 		{
 			case NextIs.Video:
 				branchCreator.Create(currentVideo.sentence, currentVideo.branches, currentVideo.currentBranchSize);
@@ -89,7 +89,7 @@ public class PlaybackController : MonoBehaviour
 
 		foreach (var pointer in pointers) pointer.SetRunningState(false);
 		controllerVisible.ChangeAlpha(0f);
-		currentNextIs = nextIs;
+		nextProcess = nextIs;
 		currentVideo = video;
 	}
 
