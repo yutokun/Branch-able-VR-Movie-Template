@@ -12,13 +12,14 @@ public class BackgroundSound : MonoBehaviour
 	static AudioSource Audio;
 	[SerializeField] AudioClip start, intermission, end;
 
-	static AudioClip startClip, intermissionClip, endClip;
+	// TODO : Start 以外の名前を募集
+	static AudioClip Start, Intermission, End;
 
-	void Start()
+	void Awake()
 	{
-		startClip = start;
-		intermissionClip = intermission;
-		endClip = end;
+		Start = start;
+		Intermission = intermission;
+		End = end;
 
 		Audio = GetComponent<AudioSource>();
 		Play(Situation.Start);
@@ -29,15 +30,15 @@ public class BackgroundSound : MonoBehaviour
 		switch (situation)
 		{
 			case Situation.Start:
-				if (startClip) Play(startClip);
+				if (Start) Play(Start);
 				break;
 
 			case Situation.Intermission:
-				if (intermissionClip) Play(intermissionClip);
+				if (Intermission) Play(Intermission);
 				break;
 
 			case Situation.End:
-				if (endClip) Play(endClip);
+				if (End) Play(End);
 				break;
 		}
 	}
