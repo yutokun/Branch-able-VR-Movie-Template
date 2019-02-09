@@ -3,8 +3,12 @@ using UnityEngine;
 
 public class End : MonoBehaviour
 {
-	void Start()
+	public static End Instance { get; private set; }
+
+	void Awake()
 	{
+		Instance = this;
+
 		gameObject.SetActive(false);
 	}
 
