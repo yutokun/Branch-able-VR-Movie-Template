@@ -30,6 +30,13 @@ public static class Tween
 		return TweenBase.Instance.StartCoroutine(FadeTextCoroutine(target, color, duration, onComplete));
 	}
 
+	public static Coroutine FadeTextAlpha(this TextMeshPro target, float alpha, float duration, Action onComplete = null)
+	{
+		var color = target.color;
+		color.a = Mathf.Clamp01(alpha);
+		return TweenBase.Instance.StartCoroutine(FadeTextCoroutine(target, color, duration, onComplete));
+	}
+
 	static IEnumerator FadeTextCoroutine(TextMeshPro target, Color color, float duration, Action onComplete = null)
 	{
 		var initial = target.color;
