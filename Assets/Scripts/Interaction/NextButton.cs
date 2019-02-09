@@ -1,9 +1,17 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 public class NextButton : MonoBehaviour, IPointable
 {
 	[HideInInspector] public Video video;
-	[HideInInspector] public bool isClickable;
+	public TextMeshPro title;
+	bool isClickable;
+
+	void Start()
+	{
+		transform.localScale = Vector3.zero;
+		transform.Scale(1f, 0.5f, () => isClickable = true);
+	}
 
 	public void Pointed()
 	{
@@ -26,5 +34,11 @@ public class NextButton : MonoBehaviour, IPointable
 
 		SoundEffectPlayer.Play(SEType.Click);
 		video.Play();
+	}
+
+	public void Destroy()
+	{
+		isClickable = false;
+		transform.Scale(0f, 0.5f, () => Destroy(gameObject));
 	}
 }
