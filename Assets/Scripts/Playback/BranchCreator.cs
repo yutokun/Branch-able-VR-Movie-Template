@@ -21,12 +21,19 @@ public class BranchCreator : MonoBehaviour
 	void Awake()
 	{
 		Instance = this;
+
 		text.text = "";
+
+		var color = text.color;
+		color.a = 0f;
+		text.color = color;
 	}
 
 	public void Create(string sentence, Branch[] branches, int branchSize)
 	{
 		text.text = sentence;
+		text.FadeTextAlpha(1f, 0.5f);
+
 		var startX = -((interval / 2) * (branchSize - 1));
 		for (var i = 0; i < branchSize; i++)
 		{
@@ -40,6 +47,8 @@ public class BranchCreator : MonoBehaviour
 
 	public void Destroy()
 	{
+		text.FadeTextAlpha(0f, 0.5f);
+
 		foreach (var nextButton in nextButtons) nextButton.Destroy();
 		nextButtons.Clear();
 	}
