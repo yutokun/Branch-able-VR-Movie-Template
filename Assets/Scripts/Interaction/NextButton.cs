@@ -34,6 +34,7 @@ public class NextButton : MonoBehaviour, IPointable
 
 		SoundEffectPlayer.Play(SEType.Click);
 		video.Play();
+		BranchCreator.Instance.Destroy();
 	}
 
 	public void Destroy()

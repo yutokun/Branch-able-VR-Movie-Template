@@ -37,7 +37,6 @@ public class Video : MonoBehaviour
 	public void Play()
 	{
 		Player.Play(clip, nextIs, this);
-		BranchCreator.Instance.Destroy();
 	}
 
 	void OnValidate()
