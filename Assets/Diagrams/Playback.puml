@@ -1,0 +1,66 @@
+@startuml
+
+class PlaybackController {
+    +Action onStartPlaying
+    +NextIs nextProcess
+    +PlayFirstVideo()
+    +Play(VideoClip clip, NextIs nextIs, Video video)
+    +SetRotation()
+}
+
+enum NextIs {
+    Video
+    Credits
+    End
+}
+
+class Branch << (S,skyblue) struct >> {
+    +Video video
+    +string text
+}
+
+class Video {
+    +VideoClip clip
+    +float RotationOffset
+    +NextIs nextIs
+    +string sentence
+    +Branch[] branches
+    +int currentBranchSize
+    +AudioClip overrideSoundOnBranch
+    +Play()
+}
+
+class BranchCreator {
+    +Create(string sentence, Branch[] branches, int branchSize)
+    +Destroy()
+}
+
+class NextButton {
+    +Video video
+    +TextMeshPro title
+    +Destroy()
+}
+
+class Credits {
+    +IEnumerator Play()
+}
+
+class End {
+    +Show()
+}
+
+StartButton -up-> PlaybackController : PlayFirstVideo
+BranchCreator <-- PlaybackController : Create
+BranchCreator .-|> Branch
+Video -up-> PlaybackController : Play
+End <-left- PlaybackController
+Credits <-down- PlaybackController
+NextButton -> Video
+Credits -up-> End
+Video .right|> Branch
+BranchCreator -> NextButton : Destroy
+BranchCreator <- NextButton : Destroy
+PlaybackController .|> NextIs
+NextIs <|-. Video
+
+@enduml
