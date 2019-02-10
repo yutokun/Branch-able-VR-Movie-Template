@@ -539,7 +539,7 @@ MonoBehaviour:
   - {fileID: 552232960}
   - {fileID: 968045134}
   firstVideo: {fileID: 2118737275}
-  currentNextIs: 0
+  nextProcess: 0
 --- !u!114 &70945537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1219,7 +1219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c537fda91b6c8bd44af12237c4ca36a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threshold: 50
+  threshold: 10
 --- !u!23 &659951394
 MeshRenderer:
   m_ObjectHideFlags: 0
