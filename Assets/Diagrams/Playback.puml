@@ -1,5 +1,7 @@
 @startuml
 
+title Playback
+
 class PlaybackController {
     +Action onStartPlaying
     +NextIs nextProcess

@@ -1,0 +1,25 @@
+@startuml
+
+title Interaction
+
+interface IPointable {
+    Pointed()
+    UnPointed()
+    Click()
+}
+
+class Pointer {
+    +SetRunningState(bool state)
+}
+
+class PointingForwarder
+
+note left : ボタンの Hierarchy を\n分かりやすく維持するために\n転送するやつを設けている
+
+IPointable <|-- PointingForwarder
+IPointable <|-left. Pointer
+PointingForwarder <-down- Pointer : IPointable の呼び出し
+StartButton <-down- PointingForwarder
+NextButton <-down- PointingForwarder
+
+@enduml
