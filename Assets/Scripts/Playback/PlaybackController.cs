@@ -83,7 +83,7 @@ public class PlaybackController : MonoBehaviour
 
 		player.clip = clip;
 		player.Play();
-		onStartPlaying.Invoke();
+		onStartPlaying?.Invoke();
 		BackgroundSound.Stop();
 		Debug.Log("Playing " + clip.name);
 
