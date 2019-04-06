@@ -77,9 +77,9 @@ Main シーンの Systems 以下にある、**Sound Effects** オブジェクト
 
 ## メモ
 
-- Windows 上で 4K × 4K（H.264）までの滑らかな再生には [LAV Filters](https://github.com/Nevcairiel/LAVFilters) と Maxwell（9xxシリーズ）以降の GPU が必要になります。
-- Windows 上で 8K × 8K（H.265）までの滑らかな再生には [LAV Filters](https://github.com/Nevcairiel/LAVFilters) と Pascal（10xxシリーズ）以降の GPU が必要になります。
-- Oculus Go は 4K × 4K までの H.264 を再生できます。
+- Windows 上で 4K × 4K（H.264）までの滑らかな再生には [LAV Filters](https://github.com/Nevcairiel/LAVFilters) と Maxwell（GTX 9xxシリーズ）以降の GPU が必要になります。
+- Windows 上で 8K × 8K（H.265）までの滑らかな再生には [LAV Filters](https://github.com/Nevcairiel/LAVFilters) と Pascal（GTX 10xxシリーズ）以降の GPU が必要になります。
+- Oculus Go は 4K × 4K または 5.7K × 2.85K までの H.264 を再生できます。
 
 ## Special Thanks
 
