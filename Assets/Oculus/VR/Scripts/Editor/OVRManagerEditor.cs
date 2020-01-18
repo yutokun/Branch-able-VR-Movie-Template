@@ -16,7 +16,7 @@ permissions and limitations under the License.
 
 using UnityEngine;
 using UnityEditor;
-using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 
 [CustomEditor(typeof(OVRManager))]
@@ -24,10 +24,95 @@ public class OVRManagerEditor : Editor
 {
 	override public void OnInspectorGUI()
 	{
+#if UNITY_ANDROID
+		OVRProjectConfig projectConfig = OVRProjectConfig.GetProjectConfig();
+		bool hasModified = false;
+
+		// Target Devices
+		EditorGUILayout.LabelField("Target Devices");
+		EditorGUI.indentLevel++;
+		List<OVRProjectConfig.DeviceType> oldTargetDeviceTypes = projectConfig.targetDeviceTypes;
+		List<OVRProjectConfig.DeviceType> targetDeviceTypes = new List<OVRProjectConfig.DeviceType>(oldTargetDeviceTypes);
+		int newCount = Mathf.Max(0, EditorGUILayout.IntField("Size", targetDeviceTypes.Count));
+		while (newCount < targetDeviceTypes.Count)
+		{
+			targetDeviceTypes.RemoveAt(targetDeviceTypes.Count - 1);
+			hasModified = true;
+		}
+		while (newCount > targetDeviceTypes.Count)
+		{
+			targetDeviceTypes.Add(OVRProjectConfig.DeviceType.Quest);
+			hasModified = true;
+		}
+		for (int i = 0; i < targetDeviceTypes.Count; i++)
+		{
+			var deviceType = (OVRProjectConfig.DeviceType)EditorGUILayout.EnumPopup(string.Format("Element {0}", i), targetDeviceTypes[i]);
+			if (deviceType != targetDeviceTypes[i])
+			{
+				targetDeviceTypes[i] = deviceType;
+				hasModified = true;
+			}
+		}
+		if (hasModified)
+		{
+			projectConfig.targetDeviceTypes = targetDeviceTypes;
+		}
+		EditorGUI.indentLevel--;
+
+		EditorGUILayout.Space();
+
+		// Hand Tracking Support
+		EditorGUI.BeginDisabledGroup(!targetDeviceTypes.Contains(OVRProjectConfig.DeviceType.Quest));
+		EditorGUILayout.LabelField("Input", EditorStyles.boldLabel);
+		OVRProjectConfig.HandTrackingSupport oldHandTrackingSupport = projectConfig.handTrackingSupport;
+		OVRProjectConfig.HandTrackingSupport newHandTrackingSupport = (OVRProjectConfig.HandTrackingSupport)EditorGUILayout.EnumPopup(
+			"Hand Tracking Support", oldHandTrackingSupport);
+		if (newHandTrackingSupport != oldHandTrackingSupport)
+		{
+			projectConfig.handTrackingSupport = newHandTrackingSupport;
+			hasModified = true;
+		}
+		EditorGUILayout.Space();
+		EditorGUI.EndDisabledGroup();
+
+		// apply any pending changes to project config
+		if (hasModified)
+		{
+			OVRProjectConfig.CommitProjectConfig(projectConfig);
+		}
+#endif
+
 		DrawDefaultInspector();
 
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_ANDROID
 		OVRManager manager = (OVRManager)target;
+#endif
+
+#if UNITY_ANDROID
+		EditorGUILayout.Space();
+		EditorGUILayout.LabelField("Security", EditorStyles.boldLabel);
+		EditorGUI.BeginChangeCheck();
+
+		bool disableBackups = projectConfig.disableBackups;
+		bool enableNSCConfig = projectConfig.enableNSCConfig;
+		SetupBoolField("Disable Backups", ref disableBackups);
+		SetupBoolField("Enable NSC Configuration", ref enableNSCConfig);
+
+		if(EditorGUI.EndChangeCheck())
+		{
+			projectConfig.disableBackups = disableBackups;
+			projectConfig.enableNSCConfig = enableNSCConfig;
+			OVRProjectConfig.CommitProjectConfig(projectConfig);
+		}
+
+		EditorGUILayout.Space();
+		EditorGUILayout.LabelField("Mixed Reality Capture for Quest (experimental)", EditorStyles.boldLabel);
+		EditorGUI.indentLevel++;
+		SetupMrcActivationModeField("ActivationMode", ref manager.mrcActivationMode);
+		EditorGUI.indentLevel--;
+#endif
+
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
 		EditorGUILayout.Space();
 		EditorGUILayout.LabelField("Mixed Reality Capture", EditorStyles.boldLabel);
 		SetupBoolField("Show Properties", ref manager.expandMixedRealityCapturePropertySheet);
@@ -50,17 +135,20 @@ public class OVRManagerEditor : Editor
 			SetupCompositoinMethodField("compositionMethod", ref manager.compositionMethod);
 			SetupLayerMaskField("extraHiddenLayers", ref manager.extraHiddenLayers, layerMaskOptions);
 
-			if (manager.compositionMethod == OVRManager.CompositionMethod.Direct || manager.compositionMethod == OVRManager.CompositionMethod.Sandwich)
+			if (manager.compositionMethod == OVRManager.CompositionMethod.External)
 			{
 				EditorGUILayout.Space();
-				if (manager.compositionMethod == OVRManager.CompositionMethod.Direct)
-				{
-					EditorGUILayout.LabelField("Direct Composition", EditorStyles.boldLabel);
-				}
-				else
-				{
-					EditorGUILayout.LabelField("Sandwich Composition", EditorStyles.boldLabel);
-				}
+				EditorGUILayout.LabelField("External Composition", EditorStyles.boldLabel);
+				EditorGUI.indentLevel++;
+
+				SetupColorField("backdropColor (Rift)", ref manager.externalCompositionBackdropColorRift);
+				SetupColorField("backdropColor (Quest)", ref manager.externalCompositionBackdropColorQuest);
+			}
+
+			if (manager.compositionMethod == OVRManager.CompositionMethod.Direct)
+			{
+				EditorGUILayout.Space();
+				EditorGUILayout.LabelField("Direct Composition", EditorStyles.boldLabel);
 				EditorGUI.indentLevel++;
 
 				EditorGUILayout.Space();
@@ -94,11 +182,6 @@ public class OVRManagerEditor : Editor
 				EditorGUILayout.Space();
 				EditorGUILayout.LabelField("Latency Control", EditorStyles.boldLabel);
 				SetupFloatField("handPoseStateLatency", ref manager.handPoseStateLatency);
-				if  (manager.compositionMethod == OVRManager.CompositionMethod.Sandwich)
-				{
-					SetupFloatField("sandwichCompositionRenderLatency", ref manager.sandwichCompositionRenderLatency);
-					SetupIntField("sandwichCompositionBufferedFrames", ref manager.sandwichCompositionBufferedFrames);
-				}
 				EditorGUI.indentLevel--;
 			}
 
@@ -107,7 +190,7 @@ public class OVRManagerEditor : Editor
 #endif
 	}
 
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_ANDROID
 	void SetupBoolField(string name, ref bool member)
 	{
 		EditorGUI.BeginChangeCheck();
@@ -216,5 +299,17 @@ public class OVRManagerEditor : Editor
 			virtualGreenScreenType = value;
 		}
 	}
+
+	void SetupMrcActivationModeField(string name, ref OVRManager.MrcActivationMode mrcActivationMode)
+	{
+		EditorGUI.BeginChangeCheck();
+		OVRManager.MrcActivationMode value = (OVRManager.MrcActivationMode)EditorGUILayout.EnumPopup(name, mrcActivationMode);
+		if (EditorGUI.EndChangeCheck())
+		{
+			Undo.RecordObject(target, "Changed " + name);
+			mrcActivationMode = value;
+		}
+	}
+
 #endif
 }

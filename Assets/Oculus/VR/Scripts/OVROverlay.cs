@@ -49,7 +49,7 @@ using Settings = UnityEngine.VR.VRSettings;
 ///			* The extra center offset can be feed from transform.position
 ///			* Note: if transform.position's magnitude is greater than 1, which will cause some cube map pixel always invisible
 ///					Which is usually not what people wanted, we don't kill the ability for developer to do so here, but will warn out.
-///     5. Equirect: Display overlay as a 360-degree equirectangular skybox.
+///		5. Equirect: Display overlay as a 360-degree equirectangular skybox.
 /// </summary>
 public class OVROverlay : MonoBehaviour
 {
@@ -94,6 +94,28 @@ public class OVROverlay : MonoBehaviour
 	/// </summary>
 	[Tooltip("If true, the layer would be used to present protected content (e.g. HDCP). The flag is effective only on PC.")]
 	public bool isProtectedContent = false;
+
+	//Source and dest rects
+	public Rect srcRectLeft = new Rect();
+	public Rect srcRectRight = new Rect();
+	public Rect destRectLeft = new Rect();
+	public Rect destRectRight = new Rect();
+
+	private OVRPlugin.TextureRectMatrixf textureRectMatrix = OVRPlugin.TextureRectMatrixf.zero;
+
+	public bool overrideTextureRectMatrix = false;
+
+	public bool overridePerLayerColorScaleAndOffset = false;
+
+	public	Vector4 colorScale = Vector4.one;
+
+	public Vector4 colorOffset = Vector4.zero;
+
+	//Warning: Developers should only use this supersample setting if they absolutely have the budget and need for it. It is extremely expensive, and will not be relevant for most developers.
+	public bool useExpensiveSuperSample = false;
+
+	//Property that can hide overlays when required. Should be false when present, true when hidden.
+	public bool hidden = false;
 
 	/// <summary>
 	/// If true, the layer will be created as an external surface. externalSurfaceObject contains the Surface object. It's effective only on Android.
@@ -180,7 +202,7 @@ public class OVROverlay : MonoBehaviour
 	protected bool isOverridePending;
 
 	internal const int maxInstances = 15;
-	internal static OVROverlay[] instances = new OVROverlay[maxInstances];
+	public static OVROverlay[] instances = new OVROverlay[maxInstances];
 
 #endregion
 
@@ -319,7 +341,7 @@ public class OVROverlay : MonoBehaviour
 				Texture sc = layerTextures[eyeId].swapChain[stage];
 				IntPtr scPtr = layerTextures[eyeId].swapChainPtr[stage];
 
-				if (sc != null && scPtr != IntPtr.Zero)
+				if (sc != null && scPtr != IntPtr.Zero && size.w == sc.width && size.h == sc.height)
 					continue;
 
 				if (scPtr == IntPtr.Zero)
@@ -371,7 +393,7 @@ public class OVROverlay : MonoBehaviour
 		if (layerIndex != -1)
 		{
 			// Turn off the overlay if it was on.
-			OVRPlugin.EnqueueSubmitLayer(true, false, false, IntPtr.Zero, IntPtr.Zero, -1, 0, OVRPose.identity.ToPosef(), Vector3.one.ToVector3f(), layerIndex, (OVRPlugin.OverlayShape)prevOverlayShape);
+			OVRPlugin.EnqueueSubmitLayer(true, false, false, IntPtr.Zero, IntPtr.Zero, -1, 0, OVRPose.identity.ToPosef_Legacy(), Vector3.one.ToVector3f(), layerIndex, (OVRPlugin.OverlayShape)prevOverlayShape);
 			instances[layerIndex] = null;
 			layerIndex = -1;
 		}
@@ -388,6 +410,38 @@ public class OVROverlay : MonoBehaviour
 
 		frameIndex = 0;
 		prevFrameIndex = -1;
+	}
+
+	/// <summary>
+	/// Sets the source and dest rects for both eyes. Source explains what portion of the source texture is used, and
+	/// dest is what portion of the destination texture is rendered into.
+	/// </summary>
+	public void SetSrcDestRects(Rect srcLeft, Rect srcRight, Rect destLeft, Rect destRight)
+	{
+		srcRectLeft = srcLeft;
+		srcRectRight = srcRight;
+		destRectLeft = destLeft;
+		destRectRight = destRight;
+	}
+
+	public void UpdateTextureRectMatrix()
+	{
+		Rect srcRectLeftConverted = new Rect(srcRectLeft.x, 1 - srcRectLeft.y - srcRectLeft.height, srcRectLeft.width, srcRectLeft.height);
+		Rect srcRectRightConverted = new Rect(srcRectRight.x, 1 - srcRectRight.y - srcRectRight.height, srcRectRight.width, srcRectRight.height);
+		textureRectMatrix.leftRect = srcRectLeftConverted;
+		textureRectMatrix.rightRect = srcRectRightConverted;
+		float leftWidthFactor = srcRectLeftConverted.width / destRectLeft.width;
+		float leftHeightFactor = srcRectLeftConverted.height / destRectLeft.height;
+		textureRectMatrix.leftScaleBias = new Vector4(leftWidthFactor, leftHeightFactor, srcRectLeftConverted.x - destRectLeft.x * leftWidthFactor, srcRectLeftConverted.y - destRectLeft.y * leftHeightFactor);
+		float rightWidthFactor = srcRectRightConverted.width / destRectRight.width;
+		float rightHeightFactor = srcRectRightConverted.height / destRectRight.height;
+		textureRectMatrix.rightScaleBias = new Vector4(rightWidthFactor, rightHeightFactor, srcRectRightConverted.x - destRectRight.x * rightWidthFactor, srcRectRightConverted.y - destRectRight.y * rightHeightFactor);
+	}
+
+	public void SetPerLayerColorScaleAndOffset(Vector4 scale, Vector4 offset)
+	{
+		colorScale = scale;
+		colorOffset = offset;
 	}
 
 	private bool LatchLayerTextures()
@@ -608,10 +662,16 @@ public class OVROverlay : MonoBehaviour
 	private bool SubmitLayer(bool overlay, bool headLocked, bool noDepthBufferTesting, OVRPose pose, Vector3 scale, int frameIndex)
 	{
 		int rightEyeIndex = (texturesPerStage >= 2) ? 1 : 0;
+		if (overrideTextureRectMatrix)
+		{
+			UpdateTextureRectMatrix();
+		}
 		bool isOverlayVisible = OVRPlugin.EnqueueSubmitLayer(overlay, headLocked, noDepthBufferTesting,
 			isExternalSurface ? System.IntPtr.Zero : layerTextures[0].appTexturePtr,
 			isExternalSurface ? System.IntPtr.Zero : layerTextures[rightEyeIndex].appTexturePtr,
-			layerId, frameIndex, pose.flipZ().ToPosef(), scale.ToVector3f(), layerIndex, (OVRPlugin.OverlayShape)currentOverlayShape);
+			layerId, frameIndex, pose.flipZ().ToPosef_Legacy(), scale.ToVector3f(), layerIndex, (OVRPlugin.OverlayShape)currentOverlayShape,
+			overrideTextureRectMatrix, textureRectMatrix, overridePerLayerColorScaleAndOffset, colorScale, colorOffset, useExpensiveSuperSample,
+			hidden);
 
 		prevOverlayShape = currentOverlayShape;
 
@@ -645,6 +705,12 @@ public class OVROverlay : MonoBehaviour
 
 	void OnEnable()
 	{
+		if (OVRManager.OVRManagerinitialized)
+			InitOVROverlay();
+	}
+
+	void InitOVROverlay()
+	{
 		if (!OVRManager.isHmdPresent)
 		{
 			enabled = false;
@@ -672,11 +738,15 @@ public class OVROverlay : MonoBehaviour
 		}
 
 		constructedOverlayXRDevice = OVRManager.loadedXRDevice;
+		xrDeviceConstructed = true;
 	}
 
 	void OnDisable()
 	{
 		if ((gameObject.hideFlags & HideFlags.DontSaveInBuild) != 0)
+			return;
+
+		if (!OVRManager.OVRManagerinitialized)
 			return;
 
 		if (OVRManager.loadedXRDevice != constructedOverlayXRDevice)
@@ -700,6 +770,7 @@ public class OVROverlay : MonoBehaviour
 			}
 		}
 		constructedOverlayXRDevice = OVRManager.XRDevice.Unknown;
+		xrDeviceConstructed = false;
 	}
 
 	void OnDestroy()
@@ -806,9 +877,17 @@ public class OVROverlay : MonoBehaviour
 	private Vector4 OpenVRUVOffsetAndScale = new Vector4(0, 0, 1.0f, 1.0f);
 	private Vector2 OpenVRMouseScale = new Vector2(1, 1);
 	private OVRManager.XRDevice constructedOverlayXRDevice;
+	private bool xrDeviceConstructed = false;
 
 	void LateUpdate()
 	{
+		if (!OVRManager.OVRManagerinitialized)
+			return;
+		if (!xrDeviceConstructed)
+		{
+			InitOVROverlay();
+		}
+
 		if (OVRManager.loadedXRDevice != constructedOverlayXRDevice)
 		{
 			Debug.LogError("Warning-XR Device was switched during runtime with overlays still enabled. When doing so, all overlays constructed with the previous XR device must first be disabled.");
@@ -837,6 +916,13 @@ public class OVROverlay : MonoBehaviour
 
 		OVRPlugin.LayerDesc newDesc = GetCurrentLayerDesc();
 		bool isHdr = (newDesc.Format == OVRPlugin.EyeTextureFormat.R16G16B16A16_FP);
+
+		// If the layer and textures are created but sizes differ, force re-creating them
+		if (!layerDesc.TextureSize.Equals(newDesc.TextureSize) && layerId > 0)
+		{
+			DestroyLayerTextures();
+			DestroyLayer();
+		}
 
 		bool createdLayer = CreateLayer(newDesc.MipLevels, newDesc.SampleCount, newDesc.Format, newDesc.LayerFlags, newDesc.TextureSize, newDesc.Shape);
 

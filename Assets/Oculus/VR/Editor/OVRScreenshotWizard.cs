@@ -190,7 +190,7 @@ class OVRScreenshotWizard : ScriptableWizard
 		string format = textureFormat.ToString();
 		string fullPath = EditorUtility.SaveFilePanel( string.Format( "Save Cubemap Screenshot as {0}", format ), "", pathName, format.ToLower() );
 		if ( !string.IsNullOrEmpty( fullPath ) )
-        {
+		{
 			Debug.Log( "Saving: " + fullPath );
 			OVRCubemapCapture.SaveCubemapCapture(cubemap, fullPath);
 		}
@@ -199,18 +199,18 @@ class OVRScreenshotWizard : ScriptableWizard
 	/// <summary>
 	/// Unity Editor menu option to take a screenshot
 	/// </summary>
-	[MenuItem("Tools/Oculus/OVR Screenshot Wizard",false,100000)]
+	[MenuItem("Oculus/Tools/OVR Screenshot Wizard", false, 100000)]
 	static void TakeOVRScreenshot()
 	{
-        OVRScreenshotWizard wizard = ScriptableWizard.DisplayWizard<OVRScreenshotWizard>("OVR Screenshot Wizard", "Render Cubemap");
-        if (wizard != null)
-        {
-            if (Selection.activeGameObject != null)
-                wizard.renderFrom = Selection.activeGameObject;
-            else
-                wizard.renderFrom = Camera.main.gameObject;
+		OVRScreenshotWizard wizard = ScriptableWizard.DisplayWizard<OVRScreenshotWizard>("OVR Screenshot Wizard", "Render Cubemap");
+		if (wizard != null)
+		{
+			if (Selection.activeGameObject != null)
+			wizard.renderFrom = Selection.activeGameObject;
+			else
+			wizard.renderFrom = Camera.main.gameObject;
 
-            wizard.isValid = (wizard.renderFrom != null);
-        }
-    }
+			wizard.isValid = (wizard.renderFrom != null);
+		}
+	}
 }

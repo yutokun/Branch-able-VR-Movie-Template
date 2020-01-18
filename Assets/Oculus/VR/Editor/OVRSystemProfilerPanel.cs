@@ -19,21 +19,15 @@ limitations under the License.
 
 ************************************************************************************/
 
-using System.Collections;
 using System.Collections.Generic;
 using System;
-using System.Net;
-using System.Net.Sockets;
 using System.Reflection;
-using System.Threading;
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.Networking.NetworkSystem;
 using UnityEditor;
 using System.Text;
 
 public class OVRSystemProfilerPanel : EditorWindow {
-	[MenuItem("Tools/Oculus/Oculus Profiler Panel")]
+	[MenuItem("Oculus/Tools/Oculus Profiler Panel")]
 	public static void ShowWindow()
 	{
 		EditorWindow.GetWindow(typeof(OVRSystemProfilerPanel), false, "Oculus Profiler");
@@ -69,17 +63,8 @@ public class OVRSystemProfilerPanel : EditorWindow {
 		if (showAndroidOptions)
 		{
 			GUILayout.BeginHorizontal();
-			string newAndroidSdkRootPath = EditorGUILayout.DelayedTextField("Android SDK root path", androidSdkRootPath);
-			if (newAndroidSdkRootPath != androidSdkRootPath)
-			{
-				androidSdkRootPath = newAndroidSdkRootPath;
-				PlayerPrefs.SetString("OVRAndroidSdkRootPath", androidSdkRootPath);
-			}
+			EditorGUILayout.LabelField("Android SDK root path: ", androidSdkRootPath);
 			GUILayout.EndHorizontal();
-			if (!OVRADBTool.IsAndroidSdkRootValid(androidSdkRootPath))
-			{
-				GUILayout.Label("Invalid Android SDK. Please set it to the Android SDK path in Unity Preferences / External Tools");
-			}
 
 			GUILayout.BeginHorizontal();
 			if (GUILayout.Button("Start Server"))
@@ -599,14 +584,7 @@ public class OVRSystemProfilerPanel : EditorWindow {
 
 	void InitializeAndroidSdkPath()
 	{
-		if (PlayerPrefs.HasKey("OVRAndroidSdkRootPath"))
-		{
-			androidSdkRootPath = PlayerPrefs.GetString("OVRAndroidSdkRootPath");
-		}
-		else
-		{
-			androidSdkRootPath = Environment.GetEnvironmentVariable("ANDROID_HOME");
-		}
+		androidSdkRootPath = OVRConfig.Instance.GetAndroidSDKPath();
 	}
 
 	// OnDestroy is called to close the EditorWindow window.
@@ -684,13 +662,22 @@ public class OVRSystemProfilerPanel : EditorWindow {
 		tcpClient.payloadReceivedCallback += OnPayloadReceived;
 
 		tcpClient.Connect(remoteListeningPort);
+
+#if UNITY_2017_1_OR_NEWER
+		EditorApplication.playModeStateChanged += OnApplicationPlayModeStateChanged;
+#endif
 	}
 
 	void DisconnectPerfMetricsTcpServer()
 	{
+#if UNITY_2017_1_OR_NEWER
+		EditorApplication.playModeStateChanged -= OnApplicationPlayModeStateChanged;
+#endif
+
 		tcpClient.Disconnect();
 	}
 
+#if UNITY_2017_1_OR_NEWER
 	void OnApplicationPlayModeStateChanged(PlayModeStateChange change)
 	{
 		Debug.LogFormat("[OVRSystemPerfMetricsWindow] OnApplicationPlayModeStateChanged {0}", change.ToString());
@@ -699,5 +686,6 @@ public class OVRSystemProfilerPanel : EditorWindow {
 			tcpClient.Disconnect();
 		}
 	}
+#endif
 
 }

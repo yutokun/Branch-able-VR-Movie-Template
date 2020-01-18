@@ -201,7 +201,6 @@ public class OVRSystemPerfMetrics
 
 		private void Update()
 		{
-			tcpServer.Tick();
 			if (tcpServer.HasConnectedClient())
 			{
 				PerfMetrics metrics = GatherPerfMetrics();

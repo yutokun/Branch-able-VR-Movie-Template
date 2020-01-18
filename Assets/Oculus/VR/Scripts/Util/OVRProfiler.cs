@@ -27,7 +27,7 @@ public class OVRProfiler : EditorWindow
 	{
 		OculusGo,
 		GearVR,
-		SantaCruz,
+		Quest,
 		OculusRift
 	};
 
@@ -35,7 +35,7 @@ public class OVRProfiler : EditorWindow
 	private Vector2 mScrollPosition;
 	static private TargetPlatform mTargetPlatform;
 
-	[MenuItem("Tools/Oculus/OVR Profiler")]
+	[MenuItem("Oculus/Tools/OVR Profiler")]
 	static void Init()
 	{
 		// Get existing open window or if none, make a new one:
@@ -52,7 +52,7 @@ public class OVRProfiler : EditorWindow
 		GUILayout.Label("OVR Profiler", EditorStyles.boldLabel);
 		string[] options = new string[]
 		{
-			"Oculus Go", "Gear VR", "Santa Cruz", "Oculus Rift",
+			"Oculus Go", "Gear VR", "Oculus Quest", "Oculus Rift",
 		};
 		mTargetPlatform = (TargetPlatform)EditorGUILayout.Popup("Target Oculus Platform", (int)mTargetPlatform, options);
 
